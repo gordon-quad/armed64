@@ -24,9 +24,18 @@
  */
 
 #include "mouse.h"
+#include "clock.h"
 
 static report_mouse_t state;
 uint8_t mouse_idle = 0;
+
+static int8_t mouse_x = 0;
+static int8_t mouse_y = 0;
+static int8_t wheel_x = 0;
+static int8_t wheel_y = 0;
+static uint32_t mouse_timer = 0;
+static uint8_t buttons = 0;
+static uint8_t accel = 1;
 
 report_mouse_t *
 mouse_report()
@@ -37,23 +46,93 @@ mouse_report()
 void
 mouse_event(event_t *event, bool pressed)
 {
-    if (pressed) {
-        state.buttons = event->mouse.button;
-        state.x = event->mouse.x;
-        state.y = event->mouse.y;
-        state.h = state.v = 0;
-        usb_update_mouse(&state);
+    if (pressed)
+    {
+        buttons |= event->mouse.button;
+        switch (event->mouse.dir)
+        {
+        case MOUSE_DIR_LEFT:
+            mouse_x += -1;
+            break;
+        case MOUSE_DIR_RIGHT:
+            mouse_x += +1;
+            break;
+        case MOUSE_DIR_UP:
+            mouse_y += -1;
+            break;
+        case MOUSE_DIR_DOWN:
+            mouse_y += +1;
+            break;
+        case WHEEL_DIR_LEFT:
+            wheel_x += -1;
+            break;
+        case WHEEL_DIR_RIGHT:
+            wheel_x += +1;
+            break;
+        case WHEEL_DIR_UP:
+            wheel_y += -1;
+            break;
+        case WHEEL_DIR_DOWN:
+            wheel_y += +1;
+            break;
+        }
+        if (event->mouse.accel != 0)
+            accel = event->mouse.accel;
+    }
+    else
+    {
+        buttons &= ~event->mouse.button;
+        switch (event->mouse.dir)
+        {
+        case MOUSE_DIR_LEFT:
+            mouse_x -= -1;
+            break;
+        case MOUSE_DIR_RIGHT:
+            mouse_x -= +1;
+            break;
+        case MOUSE_DIR_UP:
+            mouse_y -= -1;
+            break;
+        case MOUSE_DIR_DOWN:
+            mouse_y -= +1;
+            break;
+        case WHEEL_DIR_LEFT:
+            wheel_x -= -1;
+            break;
+        case WHEEL_DIR_RIGHT:
+            wheel_x -= +1;
+            break;
+        case WHEEL_DIR_UP:
+            wheel_y -= -1;
+            break;
+        case WHEEL_DIR_DOWN:
+            wheel_y -= +1;
+            break;
+        }
     }
 }
 
-void
-wheel_event(event_t *event, bool pressed)
+static int8_t mouse_move(void)
 {
-    if (pressed) {
-        state.buttons = event->wheel.button;
-        state.h = event->wheel.h;
-        state.v = event->wheel.v;
-        state.x = state.y = 0;
+    return (1 << accel);
+}
+
+static int8_t wheel_move(void)
+{
+    return accel;
+}
+
+void
+mouse_process(void)
+{
+    if (timer_passed(mouse_timer))
+    {
+        mouse_timer = timer_set(MOUSE_INTERVAL);
+        state.buttons = buttons;
+        state.x = mouse_x * mouse_move();
+        state.y = mouse_y * mouse_move();
+        state.h = wheel_x * wheel_move();
+        state.v = wheel_y * wheel_move();
         usb_update_mouse(&state);
     }
 }

@@ -68,6 +68,8 @@
 #define I2C_TIMEOUT     25
 #define I2C_POLL        5
 
+#define MOUSE_INTERVAL  20
+
 #define LAYER_STACK_MAX 5
 
 #endif

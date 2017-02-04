@@ -52,23 +52,18 @@ typedef struct {
             uint16_t code;
         } __attribute__ ((packed)) extra;
         struct {
+            uint8_t accel;
             uint8_t button;
-            int8_t x;
-            int8_t y;
+            uint8_t dir;
         } __attribute__ ((packed)) mouse;
-        struct {
-            uint8_t button;
-            int8_t h;
-            int8_t v;
-        } __attribute__ ((packed)) wheel;
-        struct {
-            uint8_t empty3;
-            uint8_t empty4;
-            uint8_t number;
-        } __attribute__ ((packed)) layer;
         struct {
             uint8_t empty5;
             uint8_t empty6;
+            uint8_t number;
+        } __attribute__ ((packed)) layer;
+        struct {
+            uint8_t empty7;
+            uint8_t empty8;
             uint8_t type;
         } __attribute__ ((packed)) cmd;
     };
@@ -81,13 +76,12 @@ enum {
     KMT_MOD,
     KMT_LAYER,
     KMT_LAYER_LOCK,
+    KMT_LAYER_UNLOCK,
     KMT_LAYER_BASE,
-    KMT_LAYER_PREV,
     KMT_LAYER_BASE_CHANGE,
     KMT_CONSUMER,
     KMT_SYSTEM,
     KMT_MOUSE,
-    KMT_WHEEL,
     KMT_CMD,
     KMT_NONE
 };
@@ -98,21 +92,49 @@ enum {
     CMD_SERIAL
 };
 
+enum {
+    MOUSE_DIR_LEFT,
+    MOUSE_DIR_RIGHT,
+    MOUSE_DIR_UP,
+    MOUSE_DIR_DOWN,
+    WHEEL_DIR_LEFT,
+    WHEEL_DIR_RIGHT,
+    WHEEL_DIR_UP,
+    WHEEL_DIR_DOWN,
+    MOUSE_DIR_NONE
+};
+
+#define BTN1 0x1
+#define BTN2 0x2
+#define BTN3 0x4
+#define BTN4 0x8
+#define BTN5 0x10
+#define BTN6 0x20
+#define BTN7 0x40
+#define BTN8 0x80
+
 #define _K(Key)        {.type = KMT_KEY, .key = { .ignore_group = false, .mod = 0, .code = KEY_##Key }}
 #define _KI(Key)       {.type = KMT_KEY, .key = { .ignore_group = true, .mod = 0, .code = KEY_##Key }}
 #define _SK(Key)       {.type = KMT_KEY, .key = { .ignore_group = false, .mod = MODIFIER_BIT(KEY_RSHIFT), .code = KEY_##Key }}
 #define _RK(Key)       {.type = KMT_KEY, .key = { .ignore_group = false, .mod = MODIFIER_BIT(KEY_RALT), .code = KEY_##Key }}
 #define _KC(Code)      {.type = KMT_KEY, .key = { .ignore_group = false, .mod = 0, .code = 0x##Code }}
 #define _S(Key)        {.type = KMT_MOD, .key = { .ignore_group = false, .code = KEY_##Key, .mod = MODIFIER_BIT(KEY_##Key) }}
-#define _M(X,Y)        {.type = KMT_MOUSE, .mouse = {.button = 0, .x = X, .y = Y }}
-#define _B(Button)     {.type = KMT_MOUSE, .mouse = {.button = Button, .x = 0, .y = 0}}
-#define _W(H,V)        {.type = KMT_WHEEL, .wheel = {.button = 0, .h = H, .v = V }}
+#define _ML            {.type = KMT_MOUSE, .mouse = {.accel = 0, .button = 0, .dir = MOUSE_DIR_LEFT}}
+#define _MR            {.type = KMT_MOUSE, .mouse = {.accel = 0, .button = 0, .dir = MOUSE_DIR_RIGHT}}
+#define _MU            {.type = KMT_MOUSE, .mouse = {.accel = 0, .button = 0, .dir = MOUSE_DIR_UP}}
+#define _MD            {.type = KMT_MOUSE, .mouse = {.accel = 0, .button = 0, .dir = MOUSE_DIR_DOWN}}
+#define _WL            {.type = KMT_MOUSE, .mouse = {.accel = 0, .button = 0, .dir = WHEEL_DIR_LEFT}}
+#define _WR            {.type = KMT_MOUSE, .mouse = {.accel = 0, .button = 0, .dir = WHEEL_DIR_RIGHT}}
+#define _WU            {.type = KMT_MOUSE, .mouse = {.accel = 0, .button = 0, .dir = WHEEL_DIR_UP}}
+#define _WD            {.type = KMT_MOUSE, .mouse = {.accel = 0, .button = 0, .dir = WHEEL_DIR_DOWN}}
+#define _MA(Accel)     {.type = KMT_MOUSE, .mouse = {.accel = Accel, .button = 0, .dir = MOUSE_DIR_NONE}}
+#define _B(Button)     {.type = KMT_MOUSE, .mouse = {.accel = 0, .button = Button, .dir = MOUSE_DIR_NONE}}
 #define _C(Key)        {.type = KMT_CONSUMER, .extra = { .empty2 = 0, .code = CONSUMER_##Key }}
 #define _Y(Key)        {.type = KMT_SYSTEM, .extra = { .empty2 = 0, .code = SYSTEM_##Key }}
 #define _L(Layer)      {.type = KMT_LAYER, .layer = { .number = Layer }}
 #define _LL(Layer)     {.type = KMT_LAYER_LOCK, .layer = { .number = Layer }}
 #define _BL            {.type = KMT_LAYER_BASE}
-#define _PL            {.type = KMT_LAYER_PREV}
+#define _PL            {.type = KMT_LAYER_UNLOCK}
 #define _CBL(Layer)    {.type = KMT_LAYER_BASE_CHANGE, .layer = { .number = Layer }}
 #define _CMD(Cmd)      {.type = KMT_CMD, .cmd = { .type = CMD_##Cmd }}
 #define _N             {.type = KMT_NONE}

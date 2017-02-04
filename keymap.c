@@ -69,7 +69,7 @@ event_t keymap[][MAX(ROWS_NUM, S_ROWS_NUM)][COLS_NUM + S_COLS_NUM] =
     },
     // Punctuation Layer
     {
-        { _K(ESC),       _K(F1),          _K(F2),        _K(F3),       _K(F4),    _K(F5),         _K(SCROLL_LOCK), _N,           _K(F6),        _K(F7),     _K(F8),        _K(F9),         _K(F10),          _L(5) },
+        { _K(ESC),       _K(F1),          _K(F2),        _K(F3),       _K(F4),    _K(F5),         _K(SCROLL_LOCK), _LL(3),       _K(F6),        _K(F7),     _K(F8),        _K(F9),         _K(F10),          _L(5) },
         { _S(LALT),      _SK(BACKTICK),   _K(BACKTICK),  _SK(4),       _SK(2),    _K(BACKSLASH),  _K(APP),         _K(APP),      _SK(6),        _SK(5),     _SK(8),        _K(F11),        _K(F12),          _S(LALT) },
         { _S(LCTRL),     _SK(LEFTBRACE),  _K(LEFTBRACE), _SK(9),       _K(QUOTE), _K(MINUS),      _L(8),           _N,           _SK(MINUS),    _SK(QUOTE), _SK(0),        _K(RIGHTBRACE), _SK(RIGHTBRACE),  _S(RCTRL) },
         { _S(LSHIFT),    _SK(1),          _SK(3),        _SK(COMMA),   _K(EQUAL), _SK(BACKSLASH), _K(DELETE),      _K(SPACE),    _SK(7),        _SK(EQUAL), _SK(PERIOD),   _C(PLAYPAUSE),  _C(MUTE),         _S(RSHIFT) },
@@ -85,11 +85,11 @@ event_t keymap[][MAX(ROWS_NUM, S_ROWS_NUM)][COLS_NUM + S_COLS_NUM] =
     },
     // Mouse Layer
     {
-        { _N,            _N,              _N,            _N,           _N,        _N,             _PL,             _PL,          _K(CLEAR),     _K(PAD_7),  _K(PAD_8),     _K(PAD_9),      _K(INSERT),       _L(5) },
-        { _S(LALT),      _N,              _N,            _N,           _N,        _N,             _N,              _K(SPACE),    _K(PAD_SLASH), _K(PAD_4),  _K(PAD_5),     _K(PAD_6),      _K(PAD_ASTERISK), _S(LALT) },
-        { _S(LCTRL),     _N,              _N,            _N,           _N,        _N,             _B(1),           _BL,          _K(PAD_MINUS), _K(PAD_1),  _K(PAD_2),     _K(PAD_3),      _K(PAD_PLUS),     _S(RCTRL) },
-        { _S(LSHIFT),    _N,              _N,            _N,           _N,        _N,             _B(2),           _B(0),        _K(PAD_EQUAL), _K(PAD_0),  _K(PAD_00),    _K(PAD_PERIOD), _K(PAD_COMMA),    _S(RSHIFT) },
-        { _N,            _N,              _N,            _N,           _N,        _N,             _N,              _N,           _N,            _K(LEFT),   _K(DOWN),      _K(UP),         _K(RIGHT),        _N },
+        { _N,            _N,              _N,            _N,           _N,        _K(CAPS_LOCK),  _PL,             _PL,          _K(NUM_LOCK),  _N,         _N,            _N,             _N,               _L(5) },
+        { _S(LALT),      _N,              _N,            _N,           _N,        _N,             _N,              _N,           _N,            _WL,        _WD,           _WU,            _WR,              _S(LALT) },
+        { _S(LCTRL),     _MA(1),          _MA(2),        _MA(3),       _MA(4),    _B(BTN4),       _B(BTN2),        _BL,          _B(BTN5),      _ML,        _MD,           _MU,            _MR,              _S(RCTRL) },
+        { _S(LSHIFT),    _N,              _N,            _N,           _N,        _N,             _B(BTN3),        _B(BTN1),     _N,            _N,         _N,            _N,             _N,               _S(RSHIFT) },
+        { _N,            _N,              _N,            _N,           _N,        _N,             _N,              _N,           _N,            _N,         _N,            _N,             _N,               _N },
     },
     // Cyrillic Layer
     {
@@ -117,7 +117,7 @@ event_t keymap[][MAX(ROWS_NUM, S_ROWS_NUM)][COLS_NUM + S_COLS_NUM] =
     },
     // Cyrillic punctuation Layer
     {
-        { _K(ESC),       _K(1),           _K(2),         _K(3),        _K(4),     _K(5),          _K(SCROLL_LOCK), _N,           _K(6),         _K(7),      _K(8),         _K(9),          _K(0),            _L(5) },
+        { _K(ESC),       _K(1),           _K(2),         _K(3),        _K(4),     _K(5),          _K(SCROLL_LOCK), _LL(3),       _K(6),         _K(7),      _K(8),         _K(9),          _K(0),            _L(5) },
         { _S(LALT),      _SK(BACKTICK),   _K(BACKTICK),  _SK(4),       _SK(2),    _K(BACKSLASH),  _K(APP),         _K(APP),      _SK(6),        _SK(5),     _SK(8),        _N,             _N,               _S(LALT) },
         { _S(LCTRL),     _SK(LEFTBRACE),  _K(LEFTBRACE), _SK(9),       _K(QUOTE), _K(MINUS),      _L(9),           _N,           _SK(MINUS),    _SK(QUOTE), _SK(0),        _K(RIGHTBRACE), _SK(RIGHTBRACE),  _S(RCTRL) },
         { _S(LSHIFT),    _SK(1),          _SK(3),        _SK(COMMA),   _K(EQUAL), _SK(BACKSLASH), _K(DELETE),      _K(SPACE),    _SK(7),        _SK(EQUAL), _SK(PERIOD),   _C(PLAYPAUSE),  _C(MUTE),         _S(RSHIFT) },
@@ -238,10 +238,6 @@ keymap_exec(event_t event, bool pressed)
         mouse_event(&event, pressed);
         break;
 
-    case KMT_WHEEL:
-        wheel_event(&event, pressed);
-        break;
-
     case KMT_CONSUMER:
         extrakey_consumer_event(&event, pressed);
         break;
@@ -259,7 +255,18 @@ keymap_exec(event_t event, bool pressed)
 
     case KMT_LAYER_LOCK:
         if (pressed)
-            layer_push(event.layer.number % (sizeof(keymap)));
+        {
+            slave_leds[0] = 1;
+            layer_stack[0] = event.layer.number % (sizeof(keymap));
+        }
+        break;
+
+    case KMT_LAYER_UNLOCK:
+        if (pressed)
+        {
+            slave_leds[0] = 0;
+            layer_stack[0] = base_layer;
+        }
         break;
 
     case KMT_LAYER_BASE:

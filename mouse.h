@@ -27,6 +27,6 @@ extern uint8_t mouse_idle;
 
 report_mouse_t *mouse_report(void);
 void mouse_event(event_t *event, bool pressed);
-void wheel_event(event_t *event, bool pressed);
+void mouse_process(void);
 
 #endif

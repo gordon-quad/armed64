@@ -39,6 +39,7 @@
 #include "usb_keycode.h"
 #include "keymap.h"
 #include "i2c.h"
+#include "mouse.h"
 
 static void
 mcu_init(void)
@@ -69,6 +70,7 @@ main(void)
         if (keyboard_active) {
             matrix_process();
             keyboard_process();
+            mouse_process();
         }
         i2c_process();
     }
