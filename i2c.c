@@ -125,22 +125,22 @@ void i2c_init(void)
     i2c_timer = timer_set(I2C_POLL+2);
     rcc_periph_clock_enable(RCC_GPIOB);
     rcc_periph_clock_enable(RCC_I2C2);
-	rcc_periph_clock_enable(RCC_AFIO);
+    rcc_periph_clock_enable(RCC_AFIO);
     gpio_set_mode(GPIOB, GPIO_MODE_OUTPUT_50_MHZ,
                   GPIO_CNF_OUTPUT_ALTFN_OPENDRAIN,
                   GPIO_I2C2_SCL | GPIO_I2C2_SDA);
 
-	i2c_peripheral_disable(I2C2);
+    i2c_peripheral_disable(I2C2);
 
-	i2c_set_clock_frequency(I2C2, I2C_CR2_FREQ_36MHZ);
+    i2c_set_clock_frequency(I2C2, I2C_CR2_FREQ_36MHZ);
 
-	i2c_set_fast_mode(I2C2);
+    i2c_set_fast_mode(I2C2);
 
-	i2c_set_ccr(I2C2, 0x1e);
-	i2c_set_trise(I2C2, 0x0c);
+    i2c_set_ccr(I2C2, 0x1e);
+    i2c_set_trise(I2C2, 0x0c);
     //i2c_set_dutycycle(I2C2, I2C_CCR_DUTY_16_DIV_9);
 
-	i2c_set_own_7bit_slave_address(I2C2, 0x50);
+    i2c_set_own_7bit_slave_address(I2C2, 0x50);
 
     i2c_enable_interrupt(I2C2, I2C_CR2_ITEVTEN);
     i2c_enable_interrupt(I2C2, I2C_CR2_ITERREN);
@@ -153,7 +153,7 @@ void i2c_init(void)
 
     I2C2_CR1 |= I2C_CR1_ENPEC;
 
-	i2c_peripheral_enable(I2C2);
+    i2c_peripheral_enable(I2C2);
 }
 
 void i2c_process(void)

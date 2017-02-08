@@ -24,10 +24,10 @@
 typedef int32_t ring_size_t;
 
 typedef struct ring {
-	uint8_t *data;
-	ring_size_t size;
-	uint32_t begin;
-	uint32_t end;
+    uint8_t *data;
+    ring_size_t size;
+    uint32_t begin;
+    uint32_t end;
 } ring_t;
 
 #define RING_SIZE(RING)  ((RING)->size - 1)

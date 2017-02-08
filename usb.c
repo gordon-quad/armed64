@@ -479,28 +479,28 @@ const struct usb_interface_descriptor nkro_iface = {
  */
 
 static const struct usb_endpoint_descriptor comm_endpoint[] = {{
-	.bLength = USB_DT_ENDPOINT_SIZE,
-	.bDescriptorType = USB_DT_ENDPOINT,
-	.bEndpointAddress = USB_ENDPOINT_ADDR_IN(EP_SERIALCOMM),
-	.bmAttributes = USB_ENDPOINT_ATTR_INTERRUPT,
-	.wMaxPacketSize = EP_SIZE_SERIALCOMM,
-	.bInterval = 0xff,
+    .bLength = USB_DT_ENDPOINT_SIZE,
+    .bDescriptorType = USB_DT_ENDPOINT,
+    .bEndpointAddress = USB_ENDPOINT_ADDR_IN(EP_SERIALCOMM),
+    .bmAttributes = USB_ENDPOINT_ATTR_INTERRUPT,
+    .wMaxPacketSize = EP_SIZE_SERIALCOMM,
+    .bInterval = 0xff,
     }};
 
 static const struct usb_endpoint_descriptor data_endpoint[] = {{
-	.bLength = USB_DT_ENDPOINT_SIZE,
-	.bDescriptorType = USB_DT_ENDPOINT,
-	.bEndpointAddress = USB_ENDPOINT_ADDR_OUT(EP_SERIALDATAOUT),
-	.bmAttributes = USB_ENDPOINT_ATTR_BULK,
-	.wMaxPacketSize = EP_SIZE_SERIALDATAOUT,
-	.bInterval = 0x0a,
+    .bLength = USB_DT_ENDPOINT_SIZE,
+    .bDescriptorType = USB_DT_ENDPOINT,
+    .bEndpointAddress = USB_ENDPOINT_ADDR_OUT(EP_SERIALDATAOUT),
+    .bmAttributes = USB_ENDPOINT_ATTR_BULK,
+    .wMaxPacketSize = EP_SIZE_SERIALDATAOUT,
+    .bInterval = 0x0a,
     }, {
-	.bLength = USB_DT_ENDPOINT_SIZE,
-	.bDescriptorType = USB_DT_ENDPOINT,
-	.bEndpointAddress = USB_ENDPOINT_ADDR_IN(EP_SERIALDATAIN),
-	.bmAttributes = USB_ENDPOINT_ATTR_BULK,
-	.wMaxPacketSize = EP_SIZE_SERIALDATAIN,
-	.bInterval = 0x0a,
+    .bLength = USB_DT_ENDPOINT_SIZE,
+    .bDescriptorType = USB_DT_ENDPOINT,
+    .bEndpointAddress = USB_ENDPOINT_ADDR_IN(EP_SERIALDATAIN),
+    .bmAttributes = USB_ENDPOINT_ATTR_BULK,
+    .wMaxPacketSize = EP_SIZE_SERIALDATAIN,
+    .bInterval = 0x0a,
     }};
 
 static const struct {
@@ -539,91 +539,91 @@ static const struct {
 };
 
 static const struct usb_interface_descriptor cdc_comm_iface[] = {{
-	.bLength = USB_DT_INTERFACE_SIZE,
-	.bDescriptorType = USB_DT_INTERFACE,
-	.bInterfaceNumber = IF_SERIALCOMM,
-	.bAlternateSetting = 0,
-	.bNumEndpoints = 1,
-	.bInterfaceClass = USB_CLASS_CDC,
-	.bInterfaceSubClass = USB_CDC_SUBCLASS_ACM,
-	.bInterfaceProtocol = USB_CDC_PROTOCOL_AT,
-	.iInterface = STRI_COMMAND,
+    .bLength = USB_DT_INTERFACE_SIZE,
+    .bDescriptorType = USB_DT_INTERFACE,
+    .bInterfaceNumber = IF_SERIALCOMM,
+    .bAlternateSetting = 0,
+    .bNumEndpoints = 1,
+    .bInterfaceClass = USB_CLASS_CDC,
+    .bInterfaceSubClass = USB_CDC_SUBCLASS_ACM,
+    .bInterfaceProtocol = USB_CDC_PROTOCOL_AT,
+    .iInterface = STRI_COMMAND,
 
-	.endpoint = comm_endpoint,
+    .endpoint = comm_endpoint,
 
-	.extra = &cdcacm_functional_descriptors,
-	.extralen = sizeof(cdcacm_functional_descriptors),
+    .extra = &cdcacm_functional_descriptors,
+    .extralen = sizeof(cdcacm_functional_descriptors),
     }};
 
 static const struct usb_interface_descriptor cdc_data_iface[] = {{
-	.bLength = USB_DT_INTERFACE_SIZE,
-	.bDescriptorType = USB_DT_INTERFACE,
-	.bInterfaceNumber = IF_SERIALDATA,
-	.bAlternateSetting = 0,
-	.bNumEndpoints = 2,
-	.bInterfaceClass = USB_CLASS_DATA,
-	.bInterfaceSubClass = 0,
-	.bInterfaceProtocol = 0,
-	.iInterface = STRI_COMMAND,
+    .bLength = USB_DT_INTERFACE_SIZE,
+    .bDescriptorType = USB_DT_INTERFACE,
+    .bInterfaceNumber = IF_SERIALDATA,
+    .bAlternateSetting = 0,
+    .bNumEndpoints = 2,
+    .bInterfaceClass = USB_CLASS_DATA,
+    .bInterfaceSubClass = 0,
+    .bInterfaceProtocol = 0,
+    .iInterface = STRI_COMMAND,
 
-	.endpoint = data_endpoint,
+    .endpoint = data_endpoint,
     }};
 
 const struct usb_interface ifaces[] = {{
-	.num_altsetting = 1,
-	.altsetting = &keyboard_iface,
+    .num_altsetting = 1,
+    .altsetting = &keyboard_iface,
     }, {
-	.num_altsetting = 1,
-	.altsetting = &mouse_iface,
+    .num_altsetting = 1,
+    .altsetting = &mouse_iface,
     }, {
-	.num_altsetting = 1,
-	.altsetting = &extrakey_iface,
+    .num_altsetting = 1,
+    .altsetting = &extrakey_iface,
     }, {
-	.num_altsetting = 1,
-	.altsetting = &nkro_iface,
+    .num_altsetting = 1,
+    .altsetting = &nkro_iface,
     }, {
         .num_altsetting = 1,
-	.altsetting = cdc_comm_iface,
+    .altsetting = cdc_comm_iface,
     }, {
-	.num_altsetting = 1,
-	.altsetting = cdc_data_iface,
+    .num_altsetting = 1,
+    .altsetting = cdc_data_iface,
     }};
 
 const struct usb_device_descriptor dev_descriptor = {
-	.bLength = USB_DT_DEVICE_SIZE,
-	.bDescriptorType = USB_DT_DEVICE,
-	.bcdUSB = 0x0110,
-	.bDeviceClass = 0,                     /* Each interface will specify its own class code */
-	.bDeviceSubClass = 0,
-	.bDeviceProtocol = 0,
-	.bMaxPacketSize0 = 64,
-	.idVendor = 0xDEAD,
-	.idProduct = 0xBEEF,
-	.bcdDevice = 0x010,
-	.iManufacturer = STRI_MANUFACTURER,
-	.iProduct = STRI_PRODUCT,
-	.iSerialNumber = STRI_SERIAL,
-	.bNumConfigurations = 1,
+    .bLength = USB_DT_DEVICE_SIZE,
+    .bDescriptorType = USB_DT_DEVICE,
+    .bcdUSB = 0x0110,
+    .bDeviceClass = 0,                     /* Each interface will specify its own class code */
+    .bDeviceSubClass = 0,
+    .bDeviceProtocol = 0,
+    .bMaxPacketSize0 = 64,
+    .idVendor = 0xDEAD,
+    .idProduct = 0xBEEF,
+    .bcdDevice = 0x010,
+    .iManufacturer = STRI_MANUFACTURER,
+    .iProduct = STRI_PRODUCT,
+    .iSerialNumber = STRI_SERIAL,
+    .bNumConfigurations = 1,
 };
 
 
 const struct usb_config_descriptor config = {
-	.bLength = USB_DT_CONFIGURATION_SIZE,
-	.bDescriptorType = USB_DT_CONFIGURATION,
-	.wTotalLength = 0,
-	.bNumInterfaces = IF_MAX,
-	.bConfigurationValue = 1,
-	.iConfiguration = 0,
-	.bmAttributes = (CD_A_RESERVED | CD_A_REMOTEWAKEUP),
-	.bMaxPower = CD_MP_100MA,
+    .bLength = USB_DT_CONFIGURATION_SIZE,
+    .bDescriptorType = USB_DT_CONFIGURATION,
+    .wTotalLength = 0,
+    .bNumInterfaces = IF_MAX,
+    .bConfigurationValue = 1,
+    .iConfiguration = 0,
+    .bmAttributes = (CD_A_RESERVED | CD_A_REMOTEWAKEUP),
+    .bMaxPower = CD_MP_100MA,
 
-	.interface = ifaces,
+    .interface = ifaces,
 };
 
 static const char *usb_strings[] = {
-	"dijkstra.xyz",
-	"Gojira",
-	"Beta",
+    "dijkstra.xyz",
+    "Gojira",
+    "Beta",
         "Boot keyboard",
         "Boot mouse",
         "Control keyboard",
