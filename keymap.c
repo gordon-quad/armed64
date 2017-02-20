@@ -40,16 +40,17 @@
 
 #include "extrakey.h"
 
-// Layer 0 - Base layer
-// Layer 1 - Punctuation layer
-// Layer 2 - Numeric layer
-// Layer 3 - Mouse layer
-// Layer 4 - Cyrillic layer
-// Layer 5 - Command layer
-// Layer 6 - Numeric fn layer
-// Layer 7 - Cyrillic punctuation layer
-// Layer 8 - Base layer with AltGr
-// Layer 9 - Cyrillic layer with AltGr
+// Layer 0  - Base layer
+// Layer 1  - Punctuation layer
+// Layer 2  - Numeric layer
+// Layer 3  - Mouse layer
+// Layer 4  - Cyrillic layer
+// Layer 5  - Command layer
+// Layer 6  - Numeric fn layer
+// Layer 7  - Cyrillic punctuation layer
+// Layer 8  - Base layer with AltGr
+// Layer 9  - Cyrillic layer with AltGr
+// Layer 10 - Plover
 
 static event_t *current[MAX(ROWS_NUM, S_ROWS_NUM)][COLS_NUM + S_COLS_NUM];
 
@@ -70,10 +71,10 @@ event_t keymap[][MAX(ROWS_NUM, S_ROWS_NUM)][COLS_NUM + S_COLS_NUM] =
     // Punctuation Layer
     {
         { _K(ESC),       _K(F1),          _K(F2),        _K(F3),       _K(F4),    _K(F5),         _K(SCROLL_LOCK), _LL(3),       _K(F6),        _K(F7),     _K(F8),        _K(F9),         _K(F10),          _L(5) },
-        { _S(LALT),      _SK(BACKTICK),   _K(BACKTICK),  _SK(4),       _SK(2),    _K(BACKSLASH),  _K(APP),         _K(APP),      _SK(6),        _SK(5),     _SK(8),        _K(F11),        _K(F12),          _S(LALT) },
+        { _S(LALT),      _SK(BACKTICK),   _K(BACKTICK),  _SK(4),       _SK(2),    _K(BACKSLASH),  _LL(10),         _K(APP),      _SK(6),        _SK(5),     _SK(8),        _K(F11),        _K(F12),          _S(LALT) },
         { _S(LCTRL),     _SK(LEFTBRACE),  _K(LEFTBRACE), _SK(9),       _K(QUOTE), _K(MINUS),      _L(8),           _N,           _SK(MINUS),    _SK(QUOTE), _SK(0),        _K(RIGHTBRACE), _SK(RIGHTBRACE),  _S(RCTRL) },
-        { _S(LSHIFT),    _SK(1),          _SK(3),        _SK(COMMA),   _K(EQUAL), _SK(BACKSLASH), _K(DELETE),      _K(SPACE),    _SK(7),        _SK(EQUAL), _SK(PERIOD),   _C(PLAYPAUSE),  _C(MUTE),         _S(RSHIFT) },
-        { _N,            _K(PRINTSCREEN), _K(PAUSE),     _K(INSERT),   _K(EXEC),  _N,             _N,              _N,           _N,            _C(REWIND), _C(VOLUMEDEC), _C(VOLUMEINC),  _C(FASTFORWARD),  _N },
+        { _S(LSHIFT),    _SK(1),          _SK(3),        _SK(COMMA),   _K(EQUAL), _SK(BACKSLASH), _K(DELETE),      _K(SPACE),    _SK(7),        _SK(EQUAL), _SK(PERIOD),   _C(PLAYPAUSE),  _K(MUTE),         _S(RSHIFT) },
+        { _N,            _K(PRINTSCREEN), _K(PAUSE),     _K(INSERT),   _B(BTN3),  _N,             _N,              _N,           _N,            _C(REWIND), _K(VOL_UP),    _K(VOL_DOWN),   _C(FASTFORWARD),  _N },
     },
     // Numeric Layer
     {
@@ -121,7 +122,7 @@ event_t keymap[][MAX(ROWS_NUM, S_ROWS_NUM)][COLS_NUM + S_COLS_NUM] =
         { _S(LALT),      _SK(BACKTICK),   _K(BACKTICK),  _SK(4),       _SK(2),    _K(BACKSLASH),  _K(APP),         _K(APP),      _SK(6),        _SK(5),     _SK(8),        _N,             _N,               _S(LALT) },
         { _S(LCTRL),     _SK(LEFTBRACE),  _K(LEFTBRACE), _SK(9),       _K(QUOTE), _K(MINUS),      _L(9),           _N,           _SK(MINUS),    _SK(QUOTE), _SK(0),        _K(RIGHTBRACE), _SK(RIGHTBRACE),  _S(RCTRL) },
         { _S(LSHIFT),    _SK(1),          _SK(3),        _SK(COMMA),   _K(EQUAL), _SK(BACKSLASH), _K(DELETE),      _K(SPACE),    _SK(7),        _SK(EQUAL), _SK(PERIOD),   _C(PLAYPAUSE),  _C(MUTE),         _S(RSHIFT) },
-        { _N,            _K(PRINTSCREEN), _K(PAUSE),     _K(INSERT),   _K(EXEC),  _N,             _N,              _N,           _N,            _C(REWIND), _C(VOLUMEDEC), _C(VOLUMEINC),  _C(FASTFORWARD),  _N },
+        { _N,            _K(PRINTSCREEN), _K(PAUSE),     _K(INSERT),   _B(BTN3),  _N,             _N,              _N,           _N,            _C(REWIND), _C(VOLUMEDEC), _C(VOLUMEINC),  _C(FASTFORWARD),  _N },
     },
     // Base Layer with AltGr
     {
@@ -138,6 +139,14 @@ event_t keymap[][MAX(ROWS_NUM, S_ROWS_NUM)][COLS_NUM + S_COLS_NUM] =
         { _S(LCTRL),     _RK(A),          _RK(S),        _RK(D),       _RK(F),    _RK(G),         _S(LGUI),        _L(1),        _RK(H),        _RK(J),     _RK(K),        _RK(L),         _RK(SEMICOLON),    _S(RCTRL) },
         { _S(LSHIFT),    _RK(Z),          _RK(X),        _RK(C),       _RK(V),    _RK(B),         _K(BACKSPACE),   _K(SPACE),    _RK(N),        _RK(M),     _RK(COMMA),    _RK(PERIOD),    _RK(SLASH),        _S(RSHIFT) },
         { _N,            _K(HOME),        _K(PAGE_DOWN), _K(PAGE_UP),  _K(END),   _N,             _N,              _N,           _N,            _K(LEFT),   _K(DOWN),      _K(UP),         _K(RIGHT),         _N },
+    },
+    // Plover
+    {
+        { _PL,           _N,              _K(0),         _K(0),        _K(0),     _K(0),          _K(MINUS),       _K(MINUS),    _K(0),         _K(0),      _K(0),         _K(0),          _K(0),            _L(5) },
+        { _N,            _N,              _K(S),         _K(T),        _K(P),     _K(H),          _K(MINUS),       _K(MINUS),    _K(F),         _K(Q),      _K(L),         _K(M),          _K(D),            _N },
+        { _N,            _N,              _K(S),         _K(K),        _K(W),     _K(R),          _K(O),           _K(E),        _K(I),         _K(B),      _K(G),         _K(Y),          _K(Z),            _N },
+        { _K(EQUAL),     _N,              _N,            _N,           _N,        _N,             _K(A),           _K(U),        _N,            _N,         _N,            _N,             _N,               _N },
+        { _N,            _K(SPACE),       _K(SPACE),     _K(SPACE),    _K(SPACE), _K(SPACE),      _N,              _N,           _K(SPACE),     _K(SPACE),  _K(SPACE),     _K(SPACE),      _K(SPACE),        _N },
     },
 };
 
@@ -256,7 +265,10 @@ keymap_exec(event_t event, bool pressed)
     case KMT_LAYER_LOCK:
         if (pressed)
         {
-            slave_leds[0] = 1;
+            if ((event.layer.number % (sizeof(keymap))) == 3)
+                slave_leds[0] = 1;
+            if ((event.layer.number % (sizeof(keymap))) == 10) 
+                slave_leds[2] = 1;
             layer_stack[0] = event.layer.number % (sizeof(keymap));
         }
         break;
@@ -265,6 +277,7 @@ keymap_exec(event_t event, bool pressed)
         if (pressed)
         {
             slave_leds[0] = 0;
+            slave_leds[2] = 0;
             layer_stack[0] = base_layer;
         }
         break;

@@ -35,7 +35,7 @@ bool keyboard_active = false;
 uint8_t keyboard_idle = 0;
 
 static report_nkro_t nkro_state;
-bool nkro_active = false;
+bool nkro_active = true;
 static bool nkro_dirty = false;
 uint8_t nkro_idle = 0;
 

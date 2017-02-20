@@ -28,13 +28,14 @@
 #include "led.h"
 #include "i2c.h"
 
-uint8_t slave_leds[S_LEDS_NUM] = {0x0, 0x0, 0x0};
+uint8_t slave_leds[S_LEDS_NUM] = {0x0, 0x1, 0x0};
 
 void
 led_init(void)
 {
     rcc_periph_clock_enable(LEDS_RCC);
     gpio_set_mode(LEDS_GPIO, GPIO_MODE_OUTPUT_2_MHZ, GPIO_CNF_OUTPUT_OPENDRAIN, LEDS_BV);
+    gpio_set(LEDS_GPIO, LEDS_BV);
 
     gpio_set_mode(GPIOB, GPIO_MODE_OUTPUT_2_MHZ, GPIO_CNF_OUTPUT_PUSHPULL, GPIO1); 
     gpio_set(GPIOB, GPIO1);
