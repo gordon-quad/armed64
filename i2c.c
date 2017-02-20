@@ -36,6 +36,7 @@ static uint8_t rcv_buf[S_ROWS_NUM];
 
 static bool pec_err = true;
 static uint32_t i2c_timer;
+static uint32_t i2c_poll_timer;
 static bool transfer = false;
 static bool active = false;
 
@@ -175,6 +176,9 @@ void i2c_process(void)
         if (active)
         {
             i2c_reset(I2C2);
+            for (i = 0; i < 800; i++)
+                __asm__("nop");
+
             i2c_init();
         }
         active = true;

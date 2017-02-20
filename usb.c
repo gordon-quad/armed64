@@ -621,9 +621,9 @@ const struct usb_config_descriptor config = {
 };
 
 static const char *usb_strings[] = {
-    "dijkstra.xyz",
-    "Gojira",
-    "Beta",
+    "Foobar inc.",
+    "Armed64",
+    "OSHW",
         "Boot keyboard",
         "Boot mouse",
         "Control keyboard",
@@ -903,11 +903,17 @@ uint8_t usbd_control_buffer[256] __attribute__((aligned));
 void
 usb_init(void)
 {
+    unsigned int i;
     rcc_periph_clock_enable(RCC_GPIOA);
     rcc_periph_clock_enable(RCC_GPIOB);
 
     gpio_set_mode(GPIOB, GPIO_MODE_OUTPUT_2_MHZ,
                   GPIO_CNF_OUTPUT_OPENDRAIN, GPIO9);
+    gpio_set(GPIOB, GPIO9);
+
+    for (i = 0; i < 800000; i++)
+        __asm__("nop");
+
     gpio_clear(GPIOB, GPIO9);
 
     usbd_dev = usbd_init(&st_usbfs_v1_usb_driver,
